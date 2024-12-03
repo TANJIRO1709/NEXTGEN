@@ -1,8 +1,8 @@
 "use client";
-import TypewriterEffect from "../components/ui/common/Typewriter";
-import { Button } from "../components/ui/common/button";
+import TypewriterEffect from "../components/ui/Typewriter";
+import { Button } from "../components/ui/button";
 import { useState } from "react";
-import { Input } from "../components/ui/common/input";
+import { Input } from "../components/ui/input";
 import axios from "axios";
 
 const GeminiAi = () => {
@@ -25,7 +25,7 @@ const GeminiAi = () => {
 
         try {
             const result = await axios.post(
-                process.env.NEXT_PUBLIC_BASE_API_URL + "/api/MakeadreamAI",
+                process.env.NEXT_PUBLIC_BASE_API_URL + "/api/ServiceHubAI",
                 {
                     prompt: prompt,
                 }
@@ -61,7 +61,7 @@ const GeminiAi = () => {
                     />
                     <Button
                         type="submit"
-                        className="h-10 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+                        className="h-10 bg-blue-600 text-black rounded-md hover:bg-blue-700 transition"
                         disabled={loading || disable}
                     >
                         {loading ? "Thinking..." : "Ask"}
@@ -69,7 +69,7 @@ const GeminiAi = () => {
                 </form>
 
                 {noOfResponses > 0 && (
-                    <div className="bg-[#D4E2D4] bg-opacity-60 rounded-xl py-4 px-6">
+                    <div className="bg-[#D4E2D4] text-black bg-opacity-60 rounded-xl py-4 px-6">
                         {response && (
                             <TypewriterEffect
                                 text={response}
