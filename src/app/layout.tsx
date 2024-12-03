@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/ui/common/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+
+const inter = Inter({ subsets: ["latin"],
+  weight: ['400','500','700'],
+ });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-[#F3F9FF] w-screen min-h-screen mx-auto overflow-x-hidden`}>
+      <Navbar isLoggedIn={false}/>
+        {children}</body>
     </html>
   );
 }

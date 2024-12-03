@@ -1,8 +1,8 @@
 "use client";
-import TypewriterEffect from "../components/ui/Typewriter";
-import { Button } from "../components/ui/button";
+import TypewriterEffect from "../components/ui/common/Typewriter";
+import { Button } from "../components/ui/common/button";
 import { useState } from "react";
-import { Input } from "../components/ui/input";
+import { Input } from "../components/ui/common/input";
 import axios from "axios";
 
 const GeminiAi = () => {
