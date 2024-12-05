@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { FaUser, FaLock, FaEnvelope, FaPhoneAlt, FaIdBadge } from "react-icons/fa";
-
-const LoginPage = () => {
+import auth from "@/auth"; // Ensure this module exists or remove this line if not needed
+import { redirect } from "next/navigation";
+import { createSessionClient } from "@/appwrite/config";
+const LoginPage = async () => {
   const [activeTab, setActiveTab] = useState("user"); // "user" or "admin"
   const [formData, setFormData] = useState({
     emailOrPhone: "",
@@ -10,12 +12,12 @@ const LoginPage = () => {
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (activeTab === "user") {
       console.log("User Login Data:", {
@@ -29,13 +31,14 @@ const LoginPage = () => {
       });
     }
   };
-
+ const user = await auth.getUser();
+    if (user) redirect("/");
   return (
     <div className="flex flex-col items-center justify-center min-h-screen font-sans bg-gradient-to-r from-blue-100 via-white to-blue-100">
       <div className="max-w-6xl w-full p-4 m-4 shadow-md rounded-md grid md:grid-cols-2 gap-4 bg-white">
         {/* Form Section */}
         <div className="md:max-w-md w-full px-4 py-6">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} action={auth.createSession}>
             {/* Header */}
             <div className="mb-8">
               <h3 className="text-gray-800 text-3xl font-extrabold">
@@ -96,6 +99,7 @@ const LoginPage = () => {
                       onChange={handleChange}
                       className="pl-8 w-full border-b bg-transparent rounded-md border-gray-300 focus:border-blue-600 text-gray-800 text-sm py-3 outline-none"
                       placeholder="Enter email or phone number"
+                      defaultValue={"sujalnitrkl0596@gmail.com"}
                     />
                   </div>
                 </div>
@@ -117,6 +121,7 @@ const LoginPage = () => {
                       onChange={handleChange}
                       className="pl-8 w-full border-b rounded-md bg-transparent border-gray-300 focus:border-blue-600 text-gray-800 text-sm py-3 outline-none"
                       placeholder="Enter employee ID"
+                      defaultValue={"674f62f2003ab302e35c"}
                     />
                   </div>
                 </div>
@@ -138,6 +143,7 @@ const LoginPage = () => {
                   onChange={handleChange}
                   className="pl-8 bg-transparent w-full rounded-md border-b border-gray-300 focus:border-blue-600 text-gray-800 text-sm py-3 outline-none"
                   placeholder="Enter password"
+                  defaultValue={"sujal911"}
                 />
               </div>
             </div>
