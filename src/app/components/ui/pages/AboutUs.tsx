@@ -2,8 +2,15 @@
 import React from "react";
 import { FaCheckCircle, FaLightbulb, FaUsers, FaChartLine, FaCog, FaHistory, FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useRouter } from 'next/navigation';
 
 const AboutUs = () => {
+
+  const router = useRouter();
+  const handleButtonClick = () => {
+    router.push('/login');
+  };
+
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
@@ -39,24 +46,20 @@ const AboutUs = () => {
 
   const timelineEvents = [
     {
-      year: "2020",
+      title: "Demographic Analysis",
+      description: "Using AI to assess demographics, identify financial needs, and customize solutions effectively."
+    },
+    {
+      title: "Customized Solutions",
+      description: "Developing tailored financial products informed by local demographic and economic insights."
+    },
+    {
+      title: "Robust AI Integration",
+      description: "Applying AI for efficiency, optimized resources, proactive service delivery, and improved outcomes."
+    },
+    {
       title: "Financial Inclusion",
-      description: "Started our journey with a vision to transform digital experiences"
-    },
-    {
-      year: "2021",
-      title: "Rapid Growth",
-      description: "Expanded our team and services to meet growing demands"
-    },
-    {
-      year: "2022",
-      title: "Innovation Hub",
-      description: "Launched our innovation lab for cutting-edge solutions"
-    },
-    {
-      year: "2023",
-      title: "Global Reach",
-      description: "Extended our services to international markets"
+      description: "Providing equitable financial services for all, bridging rural-urban gaps, fostering empowerment."
     }
   ];
 
@@ -114,15 +117,24 @@ const AboutUs = () => {
             >
               <h3 className="text-3xl font-bold text-gray-800 mb-6">Our Commitment to Excellence</h3>
               <p className="text-gray-600 text-lg mb-8">
-                We believe in pushing the boundaries of what's possible. Our team of experts is dedicated to delivering innovative solutions that help our clients achieve their goals and stay ahead in today's competitive landscape.
+              We believe in driving financial inclusion through precision and relevance. By integrating AI 
+              into our approach, we help communities access schemes that improve their quality of life 
+              and financial stability.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[1, 2, 3, 4].map((item) => (
-                  <div key={item} className="flex items-center gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
+                  <div className="flex items-center gap-3">
                     <FaCheckCircle className="text-blue-500 text-xl flex-shrink-0" />
-                    <span className="text-gray-700">Key Achievement {item}</span>
+                    <span className="text-gray-700">Accurate identification of demographic needs.</span>
                   </div>
-                ))}
+                  <div className="flex items-center gap-3">
+                    <FaCheckCircle className="text-blue-500 text-xl flex-shrink-0" />
+                    <span className="text-gray-700">Tailored campaigns based on seasonal economic cycles.</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <FaCheckCircle className="text-blue-500 text-xl flex-shrink-0" />
+                    <span className="text-gray-700">Maximized outreach impact with data-driven planning.</span>
+                  </div>
+                  
               </div>
             </motion.div>
 
@@ -137,8 +149,8 @@ const AboutUs = () => {
               className="bg-gradient-to-r from-blue-500 to-blue-600 p-8 rounded-xl shadow-lg text-white"
             >
               <h3 className="text-2xl font-bold mb-4">Ready to Start Your Journey?</h3>
-              <p className="mb-6 opacity-90">Join us in creating innovative solutions for tomorrow's challenges.</p>
-              <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-300">
+              <p className="mb-6 opacity-90">Join us in creating innovative schemes for your future.</p>
+              <button onClick={handleButtonClick} className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-300">
                 Get Started
               </button>
             </motion.div>
@@ -168,8 +180,7 @@ const AboutUs = () => {
                     <FaHistory className="text-white text-sm" />
                   </div>
                   <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg">
-                    <span className="text-blue-600 font-semibold">{event.year}</span>
-                    <h4 className="text-xl font-semibold text-gray-800 mt-1 mb-2">{event.title}</h4>
+                    <h4 className="text-xl text-blue-600  font-semibold mt-1 mb-2">{event.title}</h4>
                     <p className="text-gray-600">{event.description}</p>
                   </div>
                 </motion.div>

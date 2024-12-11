@@ -31,43 +31,44 @@ const AppFeatures = () => {
   const features = [
     {
       icon: Settings,
-      title: "Customization",
-      description: "Tailor our product to suit your unique needs and expand your reach.",
+      title: "AI-Powered Personalization",
+      description: "Harness the power of advanced AI to recommend financial and insurance schemes that align with your unique demographic, economic, and seasonal needs.",
       color: "bg-blue-100",
       iconColor: "text-blue-600"
     },
     {
       icon: ShieldCheck,
-      title: "Security",
-      description: "Your data is protected by the latest cutting-edge security measures.",
+      title: "Demographic Analysis",
+      description: "Gain access to schemes tailored to your specific profile, based on factors like age, gender, occupation, and geographic location.",
       color: "bg-green-100",
       iconColor: "text-green-600"
     },
     {
       icon: Headphones,
-      title: "Support",
-      description: "24/7 dedicated customer support for all your inquiries and needs.",
+      title: "Seasonal Insights",
+      description: "Identify financial solutions that match seasonal economic patterns, such as farming cycles, business trends, or festival periods.",
       color: "bg-purple-100",
       iconColor: "text-purple-600"
     },
     {
       icon: Rocket,
-      title: "Performance",
-      description: "Experience blazing-fast performance with our optimized solution.",
+      title: "Custom Recommendations",
+      description: "Get curated suggestions that adapt to your evolving financial goals, ensuring maximum relevance and impact.",
       color: "bg-red-100",
       iconColor: "text-red-600"
     },
     {
       icon: Star,
-      title: "Innovation",
-      description: "Stay ahead with our cutting-edge features and continuous updates.",
+      title: "Compare and Choose",
+      description: "Effortlessly compare multiple schemes side by side to understand their benefits, features, and suitability for your needs.",
       color: "bg-yellow-100",
       iconColor: "text-yellow-600"
     },
     {
+
       icon: Zap,
-      title: "Efficiency",
-      description: "Streamline your workflow with our powerful and intuitive tools.",
+      title: "Seamless Integration with India Post",
+      description: "Benefit from government-backed schemes and services, optimized through AI driven insights for greater accessibility and impact.",
       color: "bg-indigo-100",
       iconColor: "text-indigo-600"
     }
@@ -97,7 +98,7 @@ const AppFeatures = () => {
             Discover Our Exclusive Features
           </h2> */}
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Experience the power of our innovative solutions designed to help your business grow
+            Experience the power of our innovative solutions designed to help you grow
           </p>
         </motion.div>
 

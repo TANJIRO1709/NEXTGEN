@@ -18,11 +18,31 @@ import Slider from '../common/Slider';
 const images = [
   {
     id: 1,
-    url: "https://res.cloudinary.com/dcnuizxi4/image/upload/v1733043498/hero_ahmjaq.png",
+    url: "https://res.cloudinary.com/dmcnewoxd/image/upload/v1733946080/mkkaeatajq45updovou0.png",
   },
   {
     id: 2,
-    url: "https://res.cloudinary.com/dcnuizxi4/image/upload/v1733043498/hero_ahmjaq.png",
+    url: "https://res.cloudinary.com/dmcnewoxd/image/upload/v1733946114/csd3ozweimdkbwudwej7.png",
+  },
+  {
+    id: 3,
+    url: "https://res.cloudinary.com/dmcnewoxd/image/upload/v1733946121/intxg8lx8yzaflcbjb9c.png",
+  },
+  {
+    id: 4,
+    url: "https://res.cloudinary.com/dmcnewoxd/image/upload/v1733946158/khzbydja4g5khwjisggl.png",
+  },
+  {
+    id: 5,
+    url: "https://res.cloudinary.com/dmcnewoxd/image/upload/v1733946161/qqaxqrn3rwawj2jqcnhe.png",
+  },
+  {
+    id: 6,
+    url: "https://res.cloudinary.com/dmcnewoxd/image/upload/v1733946202/tursu9hagd6tv99szbsb.png",
+  },
+  {
+    id: 7,
+    url: "https://res.cloudinary.com/dmcnewoxd/image/upload/v1733946202/tursu9hagd6tv99szbsb.png",
   },
 ];
 
