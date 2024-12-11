@@ -1,0 +1,148 @@
+const schemesData = [
+  {
+    scheme_name: "Post Office Savings Account (SB)",
+    category: ["Savings", "Universal"],
+    overview: "A government-backed savings account offering 4% annual interest, tax exemptions, flexible deposits, and accessibility for all demographics.",
+    eligibility: ["Adults", "Minors 10+", "Joint Accounts"],
+    key_features: ["₹500 min balance", "No deposit cap", "₹50 min withdrawal"],
+    benefits: [
+      "Tax-free interest earnings.",
+      "Access for urban and rural areas.",
+      "Digital banking and secure deposits.",
+    ],
+  },
+  {
+    scheme_name: "Recurring Deposit Account (RD)",
+    category: ["Savings", "Recurring Deposit"],
+    overview: "A secure savings plan offering 6.7% interest, flexible deposits, loan facility, and maturity in 5 years with extension options.",
+    eligibility: ["Adults", "Minors 10+", "Joint Accounts"],
+    key_features: ["₹100 monthly deposit", "5 years tenure", "Quarterly interest"],
+    benefits: [
+      "Loan against account balance.",
+      "Advance deposit discounts.",
+      "Guaranteed compounding growth.",
+    ],
+  },
+  {
+    scheme_name: "Time Deposit Account (TD)",
+    category: ["Fixed Deposit", "Tax Saving"],
+    overview: "Fixed deposit scheme offering 6.9%-7.5% annual interest, flexible tenures (1-5 years), tax benefits, and secure government backing.",
+    eligibility: ["Individuals", "Minors 10+", "Joint Accounts"],
+    key_features: ["₹1000 min deposit", "1-5 year terms", "Tax deductions"],
+    benefits: [
+      "Safe investment with annual interest.",
+      "Loan facility using TD as collateral.",
+      "Guaranteed secure returns.",
+    ],
+  },
+  {
+    scheme_name: "Monthly Income Scheme (MIS)",
+    category: ["Income Generation", "Fixed Income"],
+    overview: "Guaranteed monthly income at 7.4% interest for 5 years with flexible deposits up to ₹9 lakh (single) or ₹15 lakh (joint).",
+    eligibility: ["Adults", "Minors 10+", "Joint Accounts"],
+    key_features: ["₹1000 min deposit", "Monthly payouts", "₹9L deposit cap"],
+    benefits: [
+      "Guaranteed fixed income monthly.",
+      "Ideal for retirees and households.",
+      "Low-risk government-backed option.",
+    ],
+  },
+  {
+    scheme_name: "Senior Citizen Savings Scheme (SCSS)",
+    category: ["Retirement", "High Interest"],
+    overview: "lA high-interest savings plan at 8.2% annually for seniors, offering tax benefits, quarterly payouts, and secure returns.",
+    eligibility: ["60+ years", "Retired personnel 50-60"],
+    key_features: ["₹1000 min deposit", "₹30L max limit", "5+3 years tenure"],
+    benefits: [
+      "Tax benefits under Section 80C.",
+      "Quarterly interest payments available.",
+      "Financial security for seniors.",
+    ],
+  },
+  {
+    scheme_name: "Public Provident Fund (PPF)",
+    category: ["Long-term", "Tax Saving"],
+    overview: "Long-term tax-free savings scheme offering 7.1% annual interest, flexible deposits, withdrawal options, and a 15-year maturity.",
+    eligibility: ["Individuals", "Guardians for minors"],
+    key_features: ["₹500 min/year", "₹1.5L max/year", "Partial withdrawals"],
+    benefits: [
+      "Tax-free principal and interest.",
+      "Loan available for emergencies.",
+      "Safe long-term investment plan.",
+    ],
+  },
+  {
+    scheme_name: "Sukanya Samriddhi Account (SSA)",
+    category: ["Girl Child", "Savings"],
+    overview: "High-interest savings scheme for girl children, offering 8.2% annual interest, tax benefits, and support for education and marriage.",
+    eligibility: ["Girl child <10", "Max 2 accounts per family"],
+    key_features: ["₹250 min/year", "₹1.5L max/year", "Tax-free growth"],
+    benefits: [
+      "Supports girl’s education and marriage.",
+      "Accessible in rural and urban areas.",
+      "Guaranteed government-backed returns.",
+    ],
+  },
+  {
+    scheme_name: "National Savings Certificate (NSC)",
+    category: ["Fixed Income", "Tax Saving"],
+    overview: "Secure, government-backed savings option offering 7.7% annual interest, tax benefits under Section 80C, and a 5-year maturity.",
+    eligibility: ["Individuals", "Joint Accounts", "Minors 10+"],
+    key_features: ["₹1000 min deposit", "5 years tenure", "Loan collateral"],
+    benefits: [
+      "Tax-saving investments under Section 80C.",
+      "Safe option with fixed interest rate.",
+      "Accessible through post offices.",
+    ],
+  },
+  {
+    scheme_name: "Kisan Vikas Patra (KVP)",
+    category: ["Doubling Investment", "Long-term"],
+    overview: "Guaranteed investment doubling in 115 months at 7.5% annual interest, offering secure returns and no upper investment limit.",
+    eligibility: ["Adults", "Minors 10+", "Joint Accounts"],
+    key_features: ["₹1000 min deposit", "115 months maturity", "Loan collateral"],
+    benefits: [
+      "Guaranteed fixed returns on maturity.",
+      "Low-risk government-backed option.",
+      "Accessible in rural post offices.",
+    ],
+  },
+  {
+    scheme_name: "Mahila Samman Certificate",
+    category: ["Women Empowerment", "Short-term"],
+    overview: "Empowering women with 7.5% annual interest, a 2-year maturity, flexible deposits, and partial withdrawal options.",
+    eligibility: ["Women", "Guardians of minors"],
+    key_features: ["₹1000 min deposit", "₹2L max limit", "2 years term"],
+    benefits: [
+      "Partial withdrawal after one year.",
+      "High returns with short tenure.",
+      "Designed for financial independence.",
+    ],
+  },
+  {
+    scheme_name: "PM CARES for Children",
+    category: ["COVID Relief", "Children"],
+    overview: "Support for COVID-19 orphaned children, providing ₹10 lakh corpus, monthly stipends, education, health benefits, and future financial security.",
+    eligibility: ["COVID orphans <18"],
+    key_features: ["₹10L corpus", "Monthly stipend", "Support till 23 years"],
+    benefits: [
+      "Comprehensive financial support.",
+      "Educational and living aid provided.",
+      "Full maturity benefits at 23.",
+    ],
+  },
+  {
+    scheme_name: "Soil Health Card (SHC)",
+    category: ["Farming", "Sustainability"],
+    overview: "Promotes sustainable farming through personalized soil analysis, reducing fertilizer costs, improving productivity, and ensuring eco-friendly cultivation practices.",
+    eligibility: ["Farmers"],
+    key_features: ["Soil testing", "Crop suggestions", "Periodic updates"],
+    benefits: [
+      "Boosts productivity using balanced fertilizers.",
+      "Reduces farming input costs efficiently.",
+      "Ensures long-term soil sustainability.",
+    ],
+  },
+];
+
+export default schemesData;
