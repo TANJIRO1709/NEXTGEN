@@ -69,6 +69,11 @@ const AdminSignupForm = () => {
           error = "Employee ID is required";
         } else if (!/^[A-Za-z0-9-]+$/.test(value)) {
           error = "Employee ID can only contain letters, numbers, and hyphens";
+        } else {
+          const deptCode = value.substring(0, 2).toUpperCase();
+          if (!['CL', 'RL', 'HL', 'SL'].includes(deptCode)) {
+            error = "Employee ID must start with department code (CL, RL, HL, or SL)";
+          }
         }
         break;
       case "email":
@@ -217,6 +222,21 @@ const AdminSignupForm = () => {
     return selectedState ? selectedState.districts : [];
   };
 
+  const getDepartmentDashboardPath = (department: string) => {
+    switch (department) {
+      case 'HL':
+        return '/dashboard/admin';
+      case 'CL':
+        return '/dashboard/circular-level';
+      case 'RL':
+        return '/dashboard/regional-level';
+      case 'SL':
+        return '/dashboard/sub-divisional-level';
+      default:
+        return '/dashboard/admin';
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -282,7 +302,7 @@ const AdminSignupForm = () => {
           ...data.admin,
           userType: 'admin'
         };
-        localStorage.setItem('user', JSON.stringify(userData));
+        localStorage.setItem('userData', JSON.stringify(userData));
         localStorage.setItem('userType', 'admin');
 
         // Login admin with token and user data including userType
@@ -302,9 +322,12 @@ const AdminSignupForm = () => {
           confirmPassword: "",
         });
 
+        // Get the correct dashboard path based on department
+        const dashboardPath = getDepartmentDashboardPath(data.admin.department);
+
         // Small delay to ensure localStorage is set before redirect
         setTimeout(() => {
-          router.push("/dashboard/admin");
+          router.push(dashboardPath);
         }, 100);
       } else {
         // Show specific error message from server
@@ -315,7 +338,7 @@ const AdminSignupForm = () => {
       // Handle network or other errors
       toast.dismiss(loadingToast);
       console.error("Admin signup error:", error);
-      
+
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
         toast.error("Unable to connect to server. Please check your internet connection.");
       } else {
@@ -325,7 +348,7 @@ const AdminSignupForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md mx-auto">
       {/* Full Name and Employee ID */}
       <div className="flex gap-4">
         <div className="w-1/2">
@@ -398,8 +421,10 @@ const AdminSignupForm = () => {
               } w-full text-sm px-4 py-3 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm hover:bg-white transition-colors duration-200`}
             >
               <option value="">Select Department</option>
-              <option value="department1">Department 1</option>
-              <option value="department2">Department 2</option>
+              <option value="CL">Circular Level (CL)</option>
+              <option value="RL">Regional Level (RL)</option>
+              <option value="HL">Head Post-office Level (HL)</option>
+              <option value="SL">Sub-divisional Post-office Level (SL)</option>
             </select>
             {errors.department && (
               <p className="text-red-500 text-xs mt-1">{errors.department}</p>

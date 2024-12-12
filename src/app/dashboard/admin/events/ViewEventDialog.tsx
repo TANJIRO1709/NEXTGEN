@@ -7,7 +7,6 @@ interface ViewEventDialogProps {
   event: {
     heading: string;
     description: string;
-    targetFamilies: number;
     schemeDetails: string;
     address: string;
     date: string;
@@ -16,6 +15,7 @@ interface ViewEventDialogProps {
     type: string;
     status: string;
     selectedTags?: string[];
+    duration: number;
   } | null;
   isOpen: boolean;
   onClose: () => void;
@@ -82,10 +82,10 @@ export default function ViewEventDialog({ event, isOpen, onClose }: ViewEventDia
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900 mb-3">Target Audience</h3>
+                  <h3 className="text-sm font-medium text-gray-900 mb-3">Duration</h3>
                   <div className="flex items-center gap-3 text-gray-700">
-                    <Users className="w-5 h-5 text-gray-400" />
-                    <span className="text-base">{event.targetFamilies} families</span>
+                    <Clock className="w-5 h-5 text-gray-400" />
+                    <span className="text-base">{event.duration} minutes</span>
                   </div>
                 </div>
 

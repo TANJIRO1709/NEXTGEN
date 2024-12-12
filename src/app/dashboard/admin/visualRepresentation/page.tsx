@@ -15,7 +15,7 @@ const VisualRepresentation: React.FC = () => {
           duration: 0.5,
           ease: "easeOut",
         }}
-        className="p-6 flex flex-col items-center justify-center h-full"
+        className="px-6 -mt-3.5 flex flex-col items-center justify-center h-full"
       >
         <div className="w-full max-w-7xl bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
           {/* Title */}

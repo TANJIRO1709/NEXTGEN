@@ -10,6 +10,7 @@ import { BiSearch } from 'react-icons/bi';
 import { FaUser } from 'react-icons/fa';
 import LogoutModal from './LogoutModal';
 import { useAuth } from '@/app/context/AuthContext';
+import Image from 'next/image';
 
 interface Notification {
   id: string;
@@ -139,13 +140,18 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="flex items-center gap-2 text-[#0D83FD]">
+                {/* <div className="flex items-center gap-2 text-[#0D83FD]">
                   <div className="relative">
                     <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                     <BsGlobeCentralSouthAsia className="relative font-bold text-4xl lg:text-5xl" />
                   </div>
                   <h1 className="text-2xl lg:text-3xl font-bold bg-clip-text">NEXTGEN</h1>
-                </div>
+                </div> */}
+                <Image
+                  src="/img/POST_LOGO.png"
+                  alt="NextGen Logo"
+                  width={100}
+                  height={100}/>
               </motion.a>
             )}
 

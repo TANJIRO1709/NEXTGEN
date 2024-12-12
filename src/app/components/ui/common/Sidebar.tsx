@@ -28,16 +28,38 @@ const userMainLinks = [
   { name: "Help Center", icon: RiQuestionLine, path: "/dashboard/user/help" }
 ];
 
-const adminMainLinks = [
-  { name: "Dashboard", icon: RiDashboardLine, path: "/dashboard/admin" },
-  { name: "View Schemes", icon: RiFileList2Line, path: "/dashboard/admin/viewSchemes" },
-  { name: "Visual Representation", icon: RiBarChartFill, path: "/dashboard/admin/visualRepresentation" },
-  { name: "AI Recommendations", icon: RiFileListLine, path: "/dashboard/admin/recommended" },
-  { name: "Events", icon: RiCalendarEventLine, path: "/dashboard/admin/events" },
-  { name: "Inbox", icon: RiInboxLine, path: "/dashboard/admin/inbox" },
-  { name: "Profile", icon: RiUser3Line, path: "/dashboard/admin/profile" },
-  { name: "Help Center", icon: RiQuestionLine, path: "/dashboard/admin/help" },
-];
+const getDepartmentLinks = (department: string) => {
+  const commonAdminLinks = [
+    { name: "View Schemes", icon: RiFileList2Line, path: "/dashboard/admin/viewSchemes" },
+    { name: "Inbox", icon: RiInboxLine, path: "/dashboard/admin/inbox" },
+    { name: "Profile", icon: RiUser3Line, path: "/dashboard/admin/profile" },
+    { name: "Help Center", icon: RiQuestionLine, path: "/dashboard/admin/help" },
+  ];
+
+  const departmentSpecificLinks = {
+    'HL': [
+      { name: "Dashboard", icon: RiDashboardLine, path: "/dashboard/admin" },
+      { name: "Visual Representation", icon: RiBarChartFill, path: "/dashboard/admin/visualRepresentation" },
+      { name: "AI Recommendations", icon: RiFileListLine, path: "/dashboard/admin/recommended" },
+      { name: "Events", icon: RiCalendarEventLine, path: "/dashboard/admin/events" },
+      ...commonAdminLinks
+    ],
+    'CL': [
+      { name: "Dashboard", icon: RiDashboardLine, path: "/dashboard/circular-level" },
+      ...commonAdminLinks
+    ],
+    'RL': [
+      { name: "Dashboard", icon: RiDashboardLine, path: "/dashboard/regional-level" },
+      ...commonAdminLinks
+    ],
+    'SL': [
+      { name: "Dashboard", icon: RiDashboardLine, path: "/dashboard/sub-divisional-level" },
+      ...commonAdminLinks
+    ]
+  };
+
+  return departmentSpecificLinks[department] || departmentSpecificLinks['HL'];
+};
 
 const bottomLinks = [
   { 
@@ -57,11 +79,15 @@ const Sidebar: React.FC<SidebarProps> = ({ userType, onLogout }) => {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname();
 
+  // Get admin department from localStorage
+  const adminDepartment = typeof window !== 'undefined' ? 
+    JSON.parse(localStorage.getItem('userData') || '{}')?.department || 'HL' : 'HL';
+  
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   const isLinkActive = (path: string) => pathname === path;
   
-  const mainLinks = userType === 'admin' ? adminMainLinks : userMainLinks;
+  const mainLinks = userType === 'admin' ? getDepartmentLinks(adminDepartment) : userMainLinks;
 
   const handleLinkClick = (item: typeof bottomLinks[0]) => {
     if (item.name === 'Logout') {

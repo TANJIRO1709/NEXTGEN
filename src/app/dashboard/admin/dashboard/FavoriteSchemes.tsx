@@ -67,7 +67,7 @@ export default function FavoriteSchemes() {
   );
 
   const handleSchemeClick = (schemeId: string) => {
-    router.push('/schemes');
+    router.push('/dashboard/admin/viewSchemes');
   };
 
   return (

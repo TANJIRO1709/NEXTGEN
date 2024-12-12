@@ -24,7 +24,14 @@ const adminSchema = new mongoose.Schema({
     department: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        enum: ['CL', 'RL', 'HL', 'SL'],
+        validate: {
+            validator: function(v) {
+                return ['CL', 'RL', 'HL', 'SL'].includes(v);
+            },
+            message: props => `${props.value} is not a valid department! Must be CL, RL, HL, or SL`
+        }
     },
     employeeId: {
         type: String,

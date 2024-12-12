@@ -10,6 +10,7 @@ interface AuthContextType {
   login: (token: string, userData: any) => void;
   logout: () => void;
   token: string | null;
+  user: any;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -49,22 +51,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const login = (newToken: string, userData: any) => {
-    // Store in both localStorage and sessionStorage for persistence
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('userType', userData.userType);
-    localStorage.setItem('userData', JSON.stringify(userData));
-    
-    sessionStorage.setItem('token', newToken);
-    sessionStorage.setItem('userType', userData.userType);
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-    
-    // Set token in cookie
-    document.cookie = `token=${newToken}; path=/; max-age=86400; samesite=strict`;
-    
-    // Update state
-    setToken(newToken);
-    setIsLoggedIn(true);
+  const login = async (token: string, userData: any) => {
+    try {
+      setIsLoggedIn(true);
+      setToken(token);
+      setUser(userData);
+
+      // Store user data
+      localStorage.setItem('token', token);
+      localStorage.setItem('userData', JSON.stringify(userData));
+      
+      // Route based on user type and department
+      if (userData.userType === 'admin') {
+        const departmentRoutes: { [key: string]: string } = {
+          'CL': '/dashboard/circular-level',
+          'RL': '/dashboard/regional-level',
+          'HL': '/dashboard/admin',
+          'SL': '/dashboard/sub-divisional-level'
+        };
+
+        const targetRoute = departmentRoutes[userData.department] || '/dashboard/admin';
+        console.log('Routing admin to:', targetRoute);
+        router.push(targetRoute);
+      } else {
+        router.push('/dashboard/user');
+      }
+
+      toast.success('Login successful!');
+    } catch (error) {
+      console.error('Error during login:', error);
+      toast.error('An error occurred during login');
+    }
   };
 
   const logout = async () => {
@@ -99,8 +116,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  useEffect(() => {
+    const checkAuth = () => {
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      const currentPath = window.location.pathname;
+
+      if (isLoggedIn) {
+        // Check if user is accessing the correct dashboard
+        if (userData.userType === 'admin') {
+          const departmentPaths: { [key: string]: string } = {
+            'CL': '/dashboard/circular-level',
+            'RL': '/dashboard/regional-level',
+            'HL': '/dashboard/admin',
+            'SL': '/dashboard/sub-divisional-level'
+          };
+
+          const correctPath = departmentPaths[userData.department];
+          if (correctPath && !currentPath.startsWith(correctPath)) {
+            router.push(correctPath);
+          }
+        } else if (!currentPath.startsWith('/dashboard/user')) {
+          router.push('/dashboard/user');
+        }
+      }
+    };
+
+    checkAuth();
+  }, [isLoggedIn, router]);
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, logout, token }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, logout, token, user }}>
       {children}
     </AuthContext.Provider>
   );

@@ -14,7 +14,7 @@ interface Event {
   id: number;
   heading: string;
   description: string;
-  targetFamilies: number;
+  duration: number;
   schemeDetails: string;
   address: string;
   date: string;
@@ -31,7 +31,7 @@ const initialEvents: Event[] = [
     id: 1,
     heading: 'SSA & MSSC Mela',
     description: 'A comprehensive mela focusing on SSA and MSSC schemes',
-    targetFamilies: 2000,
+    duration: 120,
     schemeDetails: 'SSA & MSSC Schemes',
     address: 'Kolkata North District',
     date: '2024-03-15',
@@ -46,7 +46,7 @@ const initialEvents: Event[] = [
     id: 2,
     heading: 'SCSS Awareness Campaign',
     description: 'Awareness campaign for Senior Citizen Savings Scheme',
-    targetFamilies: 1000,
+    duration: 90,
     schemeDetails: 'SCSS',
     address: 'Howrah District',
     date: '2024-03-20',
@@ -61,7 +61,7 @@ const initialEvents: Event[] = [
     id: 3,
     heading: 'Digital Banking Workshop',
     description: 'A workshop on digital banking for senior citizens',
-    targetFamilies: 500,
+    duration: 60,
     schemeDetails: 'Digital Banking',
     address: 'North 24 Parganas',
     date: '2024-04-01',
@@ -129,7 +129,7 @@ export default function EventsPage() {
       id: events.length + 1,
       heading: eventData.heading,
       description: eventData.description,
-      targetFamilies: parseInt(eventData.targetFamilies),
+      duration: eventData.duration,
       schemeDetails: eventData.schemeDetails,
       address: eventData.address,
       date: eventData.date,
@@ -153,7 +153,7 @@ export default function EventsPage() {
       ...selectedEvent,
       heading: eventData.heading,
       description: eventData.description,
-      targetFamilies: parseInt(eventData.targetFamilies),
+      duration: eventData.duration,
       schemeDetails: eventData.schemeDetails,
       address: eventData.address,
       date: eventData.date,
@@ -426,7 +426,7 @@ export default function EventsPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-gray-400" />
-                  <span className="text-sm text-gray-600">Target: {event.targetFamilies} families</span>
+                  <span className="text-sm text-gray-600">Duration: {event.duration} minutes</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-gray-400" />
@@ -464,7 +464,7 @@ export default function EventsPage() {
           initialData={selectedEvent ? {
             heading: selectedEvent.heading,
             description: selectedEvent.description,
-            targetFamilies: selectedEvent.targetFamilies.toString(),
+            duration: selectedEvent.duration.toString(),
             schemeDetails: selectedEvent.schemeDetails,
             address: selectedEvent.address,
             date: selectedEvent.date,

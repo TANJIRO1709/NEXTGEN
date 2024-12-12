@@ -118,8 +118,7 @@ export default function RecommendedSchemes() {
           <h1 className="text-3xl font-bold text-gray-900">AI-Powered Scheme Recommendations</h1>
           <p className="text-gray-600">Get personalized scheme recommendations based on your needs</p>
         </motion.div>
-
-        {/* AI Assistant Section */}
+        
         <motion.div 
           variants={itemVariants}
           className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"

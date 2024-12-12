@@ -9,7 +9,8 @@ import { useAuth } from "../context/AuthContext";
 const LoginPage = () => {
   const router = useRouter();
   const { login: authLogin, isLoggedIn } = useAuth();
-  const [activeTab, setActiveTab] = useState("user");
+  const [activeTab, setActiveTab] = useState("admin");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [formData, setFormData] = useState({
     emailOrPhone: "",
     employeeId: "",
@@ -155,7 +156,6 @@ const LoginPage = () => {
     }
   };
 
-  // Update placeholder text based on active tab
   const getInputPlaceholder = () => {
     return activeTab === "user" ? "Email or Phone" : "Employee ID";
   };

@@ -6,7 +6,7 @@ import TabNavigation from "./TabNavigation";
 import { motion } from "framer-motion";
 
 const RegistrationForm = () => {
-  const [activeTab, setActiveTab] = useState("user");
+  const [activeTab, setActiveTab] = useState("admin");
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-64px)] bg-gradient-to-br from-blue-50 via-white to-blue-50">

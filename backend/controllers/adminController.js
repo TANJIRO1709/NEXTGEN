@@ -30,6 +30,15 @@ exports.signup = async (req, res) => {
             });
         }
 
+        // Validate department from employeeId
+        const deptCode = employeeId.substring(0, 2).toUpperCase();
+        if (deptCode !== department) {
+            return res.status(400).json({
+                success: false,
+                message: "Employee ID must start with the selected department code"
+            });
+        }
+
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -47,7 +56,7 @@ exports.signup = async (req, res) => {
             district,
             pinCode,
             postOffice,
-            users: matchingUsers.map(user => user._id) // Add user references to admin
+            users: matchingUsers.map(user => user._id)
         });
 
         // Add admin reference to each matching user
@@ -61,7 +70,11 @@ exports.signup = async (req, res) => {
 
         // Generate JWT token
         const token = jwt.sign(
-            { id: admin._id, email: admin.email },
+            { 
+                id: admin._id, 
+                email: admin.email, 
+                department: admin.department 
+            },
             process.env.JWT_SECRET,
             { expiresIn: "24h" }
         );
@@ -104,12 +117,12 @@ exports.signin = async (req, res) => {
     try {
         const { employeeId, password } = req.body;
 
-        // Find admin by employeeId
+        // Find admin
         const admin = await Admin.findOne({ employeeId });
         if (!admin) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid Employee ID or password"
+                message: "Invalid credentials"
             });
         }
 
@@ -118,7 +131,16 @@ exports.signin = async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({
                 success: false,
-                message: "Invalid Employee ID or password"
+                message: "Invalid credentials"
+            });
+        }
+
+        // Validate department from employeeId
+        const deptCode = employeeId.substring(0, 2).toUpperCase();
+        if (deptCode !== admin.department) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid employee ID format"
             });
         }
 
@@ -126,12 +148,14 @@ exports.signin = async (req, res) => {
         const token = jwt.sign(
             { 
                 id: admin._id, 
-                employeeId: admin.employeeId,
-                userType: 'admin'
+                email: admin.email, 
+                department: admin.department 
             },
             process.env.JWT_SECRET,
             { expiresIn: "24h" }
         );
+
+        // Set cookie
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',

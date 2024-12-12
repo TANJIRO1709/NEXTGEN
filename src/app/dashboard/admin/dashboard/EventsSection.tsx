@@ -86,11 +86,11 @@ export default function EventsSection() {
   }, [events, filters]);
 
   const handleCreateEvent = () => {
-    router.push('/events');
+    router.push('/dashboard/admin/events');
   };
 
   const handleSchemeClick = (scheme: string) => {
-    router.push('dashboard/admin/events');
+    router.push('/dashboard/admin/viewSchemes');
   };
 
   return (
