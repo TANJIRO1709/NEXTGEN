@@ -11,19 +11,21 @@ import {
 } from 'react-icons/fa';
 import { locationsData } from '@/data/location';
 
+interface ProfileData {
+  fullName: string;
+  email: string;
+  state: string;
+  district: string;
+  postOffice: string;
+  department: string;
+  employeeId: string;
+}
+
 interface EditProfileDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: any) => void;
-  initialData: {
-    fullName: string;
-    email: string;
-    state: string;
-    district: string;
-    postOffice: string;
-    department: string;
-    employeeId: string;
-  };
+  onSave: (data: ProfileData) => void;
+  initialData: ProfileData;
 }
 
 const EditProfileDialog: React.FC<EditProfileDialogProps> = ({

@@ -4,13 +4,21 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
+interface UserData {
+  id: string;
+  email: string;
+  name: string;
+  userType: 'admin' | 'user';
+  department: string;
+}
+
 interface AuthContextType {
   isLoggedIn: boolean;
   setIsLoggedIn: (value: boolean) => void;
-  login: (token: string, userData: any) => void;
+  login: (token: string, userData: UserData) => void;
   logout: () => void;
   token: string | null;
-  user: any;
+  user: UserData | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,7 +26,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserData | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -51,7 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const login = async (token: string, userData: any) => {
+  const login = async (token: string, userData: UserData) => {
     try {
       setIsLoggedIn(true);
       setToken(token);
@@ -87,7 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     try {
       // Call backend logout endpoint
-      const response = await fetch('http://localhost:4000/api/v1/auth/admin/logout', {
+      const response = await fetch('NEXT_PUBLIC_BASE_SERVER_URL/api/v1/auth/admin/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -118,25 +126,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAuth = () => {
-      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-      const currentPath = window.location.pathname;
+      const storedUserData = localStorage.getItem('userData');
+      if (storedUserData) {
+        const userData: UserData = JSON.parse(storedUserData);
+        const currentPath = window.location.pathname;
 
-      if (isLoggedIn) {
-        // Check if user is accessing the correct dashboard
-        if (userData.userType === 'admin') {
-          const departmentPaths: { [key: string]: string } = {
-            'CL': '/dashboard/circular-level',
-            'RL': '/dashboard/regional-level',
-            'HL': '/dashboard/admin',
-            'SL': '/dashboard/sub-divisional-level'
-          };
+        if (isLoggedIn) {
+          // Check if user is accessing the correct dashboard
+          if (userData.userType === 'admin') {
+            const departmentPaths: { [key: string]: string } = {
+              'CL': '/dashboard/circular-level',
+              'RL': '/dashboard/regional-level',
+              'HL': '/dashboard/admin',
+              'SL': '/dashboard/sub-divisional-level'
+            };
 
-          const correctPath = departmentPaths[userData.department];
-          if (correctPath && !currentPath.startsWith(correctPath)) {
-            router.push(correctPath);
+            const correctPath = departmentPaths[userData.department];
+            if (correctPath && !currentPath.startsWith(correctPath)) {
+              router.push(correctPath);
+            }
+          } else if (!currentPath.startsWith('/dashboard/user')) {
+            router.push('/dashboard/user');
           }
-        } else if (!currentPath.startsWith('/dashboard/user')) {
-          router.push('/dashboard/user');
         }
       }
     };

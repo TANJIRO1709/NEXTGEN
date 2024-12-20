@@ -16,9 +16,12 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { Event, EventType, PriorityLevel, TagType, EventFilters } from '@/types/events';
+import { 
+  PriorityLevel, 
+  TagType, 
+  EventFilters 
+} from '@/types/events';
 
-const EVENT_TYPES: EventType[] = ['Mela', 'Campaign', 'Workshop'];
 const PRIORITY_LEVELS: PriorityLevel[] = ['High', 'Medium', 'Low'];
 const TAGS: TagType[] = [
   'Male', 'Female', 'Minor', 'Youth', 'Student', 
@@ -34,7 +37,7 @@ export default function EventsSection() {
     tags: []
   });
 
-  const events: Event[] = [
+  const events = useMemo(() => [
     {
       id: '1',
       title: 'SSA & MSSC Mela',
@@ -67,7 +70,7 @@ export default function EventsSection() {
       priority: 'Medium',
       eventType: 'Campaign'
     }
-  ];
+  ], []);
 
   const filteredEvents = useMemo(() => {
     return events.filter(event => {
@@ -89,7 +92,7 @@ export default function EventsSection() {
     router.push('/dashboard/admin/events');
   };
 
-  const handleSchemeClick = (scheme: string) => {
+  const handleSchemeClick = () => {
     router.push('/dashboard/admin/viewSchemes');
   };
 
@@ -150,32 +153,6 @@ export default function EventsSection() {
                     <h3 className="font-medium text-sm text-gray-600">Filters</h3>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-medium text-sm text-gray-600 mb-2">Event Type</h3>
-                    <div className="space-y-1">
-                      {EVENT_TYPES.map(type => (
-                        <label key={type} className="flex items-center gap-2 p-1.5 rounded hover:bg-gray-50 cursor-pointer text-sm">
-                          <input
-                            type="radio"
-                            checked={filters.eventType === type}
-                            onChange={() => setFilters(prev => ({ ...prev, eventType: type }))}
-                            className="text-blue-600 focus:ring-blue-500"
-                          />
-                          <span className="text-gray-700">{type}</span>
-                        </label>
-                      ))}
-                      <label className="flex items-center gap-2 p-1.5 rounded hover:bg-gray-50 cursor-pointer text-sm">
-                        <input
-                          type="radio"
-                          checked={filters.eventType === null}
-                          onChange={() => setFilters(prev => ({ ...prev, eventType: null }))}
-                          className="text-blue-600 focus:ring-blue-500"
-                        />
-                        <span className="text-gray-700">All Types</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="border-t px-4 py-3">
                     <h3 className="font-medium text-sm text-gray-600 mb-2">Priority</h3>
                     <div className="space-y-1">
                       {PRIORITY_LEVELS.map(priority => (
@@ -283,7 +260,7 @@ export default function EventsSection() {
 
             <div className="flex items-center justify-between pt-4 border-t">
               <button 
-                onClick={() => handleSchemeClick(event.scheme)}
+                onClick={() => handleSchemeClick()}
                 className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2 group"
               >
                 View Details

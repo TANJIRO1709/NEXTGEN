@@ -7,7 +7,7 @@ export default function TypewriterEffect({
     setDisable,
 }: {
     text: string;
-    setDisable: any;
+    setDisable: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     const [displayText, setDisplayText] = useState("");
     const [index, setIndex] = useState(0);
@@ -26,7 +26,7 @@ export default function TypewriterEffect({
                 setDisable(false);
             }, 5000);
         }
-    }, [index, text]);
+    }, [index, text, setDisable]);
 
     return (
         <div className="w-full">

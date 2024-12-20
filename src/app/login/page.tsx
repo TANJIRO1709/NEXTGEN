@@ -6,21 +6,25 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 
+interface FormErrors {
+  emailOrPhone?: string;
+  employeeId?: string;
+  password?: string;
+}
+
+type UserType = "user" | "admin";
+
 const LoginPage = () => {
   const router = useRouter();
   const { login: authLogin, isLoggedIn } = useAuth();
-  const [activeTab, setActiveTab] = useState("admin");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [activeTab, setActiveTab] = useState<UserType>("admin");
+
   const [formData, setFormData] = useState({
     emailOrPhone: "",
     employeeId: "",
     password: "",
   });
-  const [errors, setErrors] = useState({
-    emailOrPhone: "",
-    employeeId: "",
-    password: "",
-  });
+  const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,7 +52,7 @@ const LoginPage = () => {
   };
 
   const validate = () => {
-    const newErrors: { [key: string]: string } = {};
+    const newErrors: FormErrors = {};
 
     if (!formData.password) {
       newErrors.password = "Password is required";
@@ -64,8 +68,6 @@ const LoginPage = () => {
       if (!formData.emailOrPhone) {
         newErrors.emailOrPhone = "Employee ID is required";
       }
-      // Add specific validation for Employee ID if needed
-      // For example, checking format or length
     }
 
     setErrors(newErrors);
@@ -79,8 +81,8 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       const endpoint = activeTab === "user" 
-        ? "http://localhost:4000/api/v1/auth/login"
-        : "http://localhost:4000/api/v1/auth/admin/signin";
+        ? "NEXT_PUBLIC_BASE_SERVER_URL/api/v1/auth/login"
+        : "NEXT_PUBLIC_BASE_SERVER_URL/api/v1/auth/admin/signin";
 
       const requestBody = activeTab === "user" 
         ? {
@@ -121,14 +123,10 @@ const LoginPage = () => {
       // Update auth context with the token and user data
       authLogin(data.token, {
         id: userData.id,
-        fullName: userData.fullName,
+        name: userData.fullName,
         email: userData.email,
-        pincode: userData.pinCode || userData.pincode,
         userType: activeTab,
-        ...(activeTab === "admin" && {
-          employeeId: userData.employeeId,
-          department: userData.department
-        })
+        department: userData.department || ''
       });
 
       // Store auth data in localStorage
@@ -144,9 +142,20 @@ const LoginPage = () => {
         router.push(`/dashboard/${activeTab}`);
       }, 100);
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Login error:", error);
-      toast.error(error.message || "Failed to login");
+      
+      // Type guard for Error objects
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else if (typeof error === 'object' && error && 'message' in error) {
+        // For objects with message property
+        toast.error(error.message as string);
+      } else {
+        // Fallback error message
+        toast.error("Failed to login");
+      }
+
       // Clear any partial auth data on error
       localStorage.removeItem('token');
       localStorage.removeItem('userType');
@@ -331,7 +340,7 @@ const LoginPage = () => {
                 </motion.button>
 
                 <p className="text-center text-sm text-gray-600">
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <a
                     href="/signup"
                     className="font-medium text-blue-600 hover:text-blue-500"

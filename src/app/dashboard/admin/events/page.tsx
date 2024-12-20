@@ -74,19 +74,6 @@ const initialEvents: Event[] = [
   }
 ];
 
-const allTags = [
-  { id: 'women', label: 'Women', icon: 'user' },
-  { id: 'student', label: 'Student', icon: 'graduation-cap' },
-  { id: 'youth', label: 'Youth', icon: 'users' },
-  { id: 'senior', label: 'Senior Citizen', icon: 'heart-handshake' },
-  { id: 'male', label: 'Male', icon: 'user' },
-  { id: 'female', label: 'Female', icon: 'user' },
-  { id: 'rural', label: 'Rural', icon: 'home' },
-  { id: 'urban', label: 'Urban', icon: 'building-2' },
-  { id: 'business', label: 'Business', icon: 'briefcase' },
-  { id: 'farmer', label: 'Farmer', icon: 'wheat' }
-];
-
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -103,7 +90,6 @@ const staggerContainer = {
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>(initialEvents);
-  const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedPriority, setSelectedPriority] = useState<string>('all');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -118,10 +104,9 @@ export default function EventsPage() {
       return selectedTags.some(tag => event.selectedTags.includes(tag));
     })
     .filter(event => {
-      const matchesStatus = selectedStatus === 'all' || event.status.toLowerCase() === selectedStatus;
       const matchesType = selectedType === 'all' || event.type.toLowerCase() === selectedType;
       const matchesPriority = selectedPriority === 'all' || event.priority.toLowerCase() === selectedPriority;
-      return matchesStatus && matchesType && matchesPriority;
+      return matchesType && matchesPriority;
     });
 
   const handleCreateEvent = (eventData: EventFormData) => {
@@ -181,14 +166,6 @@ export default function EventsPage() {
     setSelectedEvent(null);
     // Show notification
     alert('Event deleted successfully!');
-  };
-
-  const toggleTagFilter = (tag: string) => {
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(prevTags => prevTags.filter(t => t !== tag));
-    } else {
-      setSelectedTags(prevTags => [...prevTags, tag]);
-    }
   };
 
   const clearFilters = () => {
@@ -464,7 +441,7 @@ export default function EventsPage() {
           initialData={selectedEvent ? {
             heading: selectedEvent.heading,
             description: selectedEvent.description,
-            duration: selectedEvent.duration.toString(),
+            duration: selectedEvent.duration,
             schemeDetails: selectedEvent.schemeDetails,
             address: selectedEvent.address,
             date: selectedEvent.date,

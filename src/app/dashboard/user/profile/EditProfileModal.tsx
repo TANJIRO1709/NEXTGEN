@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   FaUser,
   FaPhone,
@@ -36,14 +36,11 @@ interface EditProfileModalProps {
   showFarmerFields: boolean;
 }
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  });
-};
+interface PostOfficeData {
+  BranchType: string;
+  Name: string;
+  // Add other fields if needed
+}
 
 const EditProfileModal: React.FC<EditProfileModalProps> = ({
   isOpen,
@@ -53,7 +50,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   handleSave,
   showFarmerFields,
 }) => {
-  const [postOffices, setPostOffices] = useState<Array<{ Name: string; BranchType: string }>>([]);
+  const [postOffices, setPostOffices] = useState<Array<PostOfficeData>>([]);
 
   const handlePinCodeChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const pinCode = e.target.value;
@@ -63,7 +60,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         const response = await fetch(`https://api.postalpincode.in/pincode/${pinCode}`);
         const data = await response.json();
         if (data[0].Status === "Success") {
-          const mainOffices = data[0].PostOffice.filter((office: any) => office.BranchType === "Sub Post Office");
+          const mainOffices = data[0].PostOffice.filter((office: PostOfficeData) => office.BranchType === "Sub Post Office");
           setPostOffices(mainOffices);
         } else {
           setPostOffices([]);

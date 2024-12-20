@@ -12,13 +12,14 @@ import {
   FaTractor,
   FaSeedling,
   FaEdit,
-  FaChartLine,
   FaClock,
   FaRupeeSign,
-  FaGenderless
+  FaCheckCircle,
+  FaBell,
+  FaHeart,
 } from "react-icons/fa";
+import { IconType } from 'react-icons';
 import EditProfileModal from "./EditProfileModal";
-import { FaBell, FaHeart, FaCheckCircle } from "react-icons/fa";
 import { DashboardLayout } from "../DashboardLayout";
 
 interface ProfileData {
@@ -103,7 +104,7 @@ const ProfilePage = () => {
     setIsModalOpen(false);
   };
 
-  const StatCard = ({ title, value, icon: Icon }: { title: string; value: string; icon: any }) => (
+  const StatCard = ({ title, value, icon: Icon }: { title: string; value: string; icon: IconType }) => (
     <motion.div 
       variants={itemVariants}
       whileHover={{ scale: 1.02, y: -5 }}
@@ -337,7 +338,7 @@ const ProfilePage = () => {
   );
 };
 
-const InfoItem = ({ icon: Icon, label, value }: { icon: any; label: string; value: string }) => (
+const InfoItem = ({ icon: Icon, label, value }: { icon: IconType; label: string; value: string }) => (
   <motion.div 
     variants={itemVariants}
     className="flex items-center space-x-3"
@@ -355,7 +356,7 @@ const InfoItem = ({ icon: Icon, label, value }: { icon: any; label: string; valu
   </motion.div>
 );
 
-const StatsBox = ({ color, icon: Icon, value, label }: { color: string; icon: any; value: string; label: string }) => (
+const StatsBox = ({ color, icon: Icon, value, label }: { color: string; icon: IconType; value: string; label: string }) => (
   <motion.div 
     variants={itemVariants}
     whileHover={{ scale: 1.05, y: -5 }}

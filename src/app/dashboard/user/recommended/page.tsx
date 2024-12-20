@@ -75,8 +75,8 @@ export default function RecommendedSchemes() {
         .map((line: string) => line.trim());
       
       setSchemes(schemeNames);
-    } catch (e: any) {
-      console.error(e);
+    } catch (error: unknown) {
+      console.error(error);
       setDisable(false);
       setResponse("Sorry, there was an error processing your request. Please try again.");
     } finally {
@@ -154,15 +154,15 @@ export default function RecommendedSchemes() {
                 className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-70"
               >
                 {isLoading ? (
-                  <>
+                  <div>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     <span>Processing...</span>
-                  </>
+                  </div>
                 ) : (
-                  <>
+                  <div>
                     <Sparkles className="h-5 w-5" />
                     <span>Get Recommendations</span>
-                  </>
+                  </div>
                 )}
               </motion.button>
             </form>
@@ -281,9 +281,10 @@ export default function RecommendedSchemes() {
         <AnimatePresence>
           {showComparison && selectedScheme1 && selectedScheme2 && (
             <ComparisonView
-              scheme1={selectedScheme1}
-              scheme2={selectedScheme2}
-              onClose={() => setShowComparison(false)}
+              comparison={{
+                scheme1: schemeDetails[selectedScheme1],
+                scheme2: schemeDetails[selectedScheme2]
+              }}
             />
           )}
         </AnimatePresence>

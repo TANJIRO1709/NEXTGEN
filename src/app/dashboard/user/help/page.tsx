@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { DashboardLayout } from '../DashboardLayout';
 import { 
-  Book, HelpCircle, Mail, Phone, Search, ChevronDown, ChevronUp, 
-  ExternalLink, MessageSquare, BookOpen, Bookmark, ArrowRight,
+  Book, HelpCircle,  Search, ChevronDown, ChevronUp, 
+   MessageSquare, BookOpen, Bookmark, 
   Send, Loader2, CheckCircle, XCircle, Info as InfoIcon 
 } from 'lucide-react';
 
@@ -61,7 +61,7 @@ const HelpCenter = () => {
   // State for documentation expandable content
   // const [expandedDoc, setExpandedDoc] = useState<number | null>(null);
 
-  const documentationItems: DocumentationItem[] = [
+  const documentationItems = useMemo(() => [
     {
       title: 'Getting Started Guide',
       description: 'Learn how to navigate and use the dashboard effectively.',
@@ -107,9 +107,9 @@ const HelpCenter = () => {
         - Recovery options
       `
     }
-  ];
+  ], []);
 
-  const faqItems: FAQItem[] = [
+  const faqItems = useMemo(() => [
     {
       question: 'How do I reset my password?',
       answer: 'You can reset your password by clicking on the "Forgot Password" link on the login page. Follow the instructions sent to your email.'
@@ -134,7 +134,41 @@ const HelpCenter = () => {
       question: 'What browsers are supported?',
       answer: 'Our platform supports the latest versions of Chrome, Firefox, Safari, and Edge browsers for optimal performance.'
     }
-  ];
+  ], []);
+
+  // Initialize filtered items
+  const filteredDocsAndFaqs = useMemo(() => {
+    return {
+      docs: [...documentationItems],
+      faqs: [...faqItems]
+    };
+  }, [documentationItems, faqItems]);
+
+  useEffect(() => {
+    setFilteredDocs(filteredDocsAndFaqs.docs);
+    setFilteredFaqs(filteredDocsAndFaqs.faqs);
+  }, [filteredDocsAndFaqs]);
+
+  // Filter items based on search query
+  useEffect(() => {
+    if (!searchQuery) {
+      setFilteredDocs(documentationItems);
+      setFilteredFaqs(faqItems);
+      return;
+    }
+
+    const filtered = documentationItems.filter((item) =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredDocs(filtered);
+
+    const filteredFAQs = faqItems.filter((item) =>
+      item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.answer.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredFaqs(filteredFAQs);
+  }, [searchQuery, documentationItems, faqItems]);
 
   // Search functionality with debounce
   useEffect(() => {
@@ -162,12 +196,6 @@ const HelpCenter = () => {
 
     return () => clearTimeout(debounceTimeout);
   }, [searchQuery]);
-
-  // Initialize filtered items
-  useEffect(() => {
-    setFilteredDocs(documentationItems);
-    setFilteredFaqs(faqItems);
-  }, []);
 
   // Form validation
   const validateForm = (): boolean => {
@@ -235,7 +263,7 @@ const HelpCenter = () => {
       
       // Reset success message after 3 seconds
       setTimeout(() => setSubmitStatus('idle'), 3000);
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 3000);
     }
@@ -275,7 +303,7 @@ const HelpCenter = () => {
             </div>
             {searchQuery && (filteredDocs.length === 0 && filteredFaqs.length === 0) && (
               <p className="mt-4 text-sm text-gray-500">
-                No results found for "{searchQuery}". Try using different keywords or browse our documentation below.
+                No results found for &quot;{searchQuery}&quot;. Try using different keywords or browse our documentation below.
               </p>
             )}
           </div>
@@ -295,7 +323,7 @@ const HelpCenter = () => {
                   <p className="text-sm text-gray-500 mt-1">Explore our comprehensive guides</p>
                 </div>
               </div>
-              
+　　 　　　　　
               <div className="space-y-6">
                 {filteredDocs.length > 0 ? (
                   filteredDocs.map((item, index) => (
@@ -505,7 +533,7 @@ const HelpCenter = () => {
               </div>
               <div>
                 <h2 className="text-2xl font-semibold text-gray-900">Contact Us</h2>
-                <p className="text-sm text-gray-500 mt-1">We'll get back to you within 24 hours</p>
+                <p className="text-sm text-gray-500 mt-1">We&apos;ll get back to you within 24 hours</p>
               </div>
             </div>
 

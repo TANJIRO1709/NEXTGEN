@@ -131,7 +131,7 @@ export default function SchemesPage() {
         animate="visible"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {filteredSchemes.map((scheme, index) => (
+        {filteredSchemes.map((scheme) => (
           <motion.div
             key={scheme.id}
             variants={itemVariants}

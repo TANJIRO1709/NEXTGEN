@@ -18,8 +18,13 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useAuth } from '../context/AuthContext';
 
+interface PostOffice {
+  Name: string;
+  BranchType: string;
+}
+
 const UserSignupForm = () => {
-  const { login, setIsLoggedIn } = useAuth();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -37,7 +42,7 @@ const UserSignupForm = () => {
     cropsGrown: "",
     termsAccepted: false,
   });
-  const [postOffices, setPostOffices] = useState([]);
+  const [postOffices, setPostOffices] = useState<PostOffice[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({
@@ -50,7 +55,7 @@ const UserSignupForm = () => {
   });
   const [isLoadingPinCode, setIsLoadingPinCode] = useState(false);
   const router = useRouter();
-
+  console.log(isLoadingPinCode);
   const validateField = (name: string, value: string) => {
     let error = "";
     switch (name) {
@@ -102,8 +107,9 @@ const UserSignupForm = () => {
     return error;
   };
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
     const newValue = type === "checkbox" ? checked : value;
     setFormData({
       ...formData,
@@ -131,7 +137,7 @@ const UserSignupForm = () => {
     }
   };
 
-  const handlePinCodeChange = (e) => {
+  const handlePinCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pinCode = e.target.value;
     setFormData({ ...formData, pinCode });
 
@@ -142,7 +148,7 @@ const UserSignupForm = () => {
         .then((data) => {
           if (data[0].Status === "Success") {
             const mainOffices = data[0].PostOffice.filter(
-              (office) => office.BranchType === "Sub Post Office"
+              (office: { BranchType: string }) => office.BranchType === "Sub Post Office"
             );
             setPostOffices(mainOffices);
           } else {
@@ -170,7 +176,8 @@ const UserSignupForm = () => {
     // Validate all fields before submission
     let hasErrors = false;
     Object.keys(formData).forEach((field) => {
-      if (validateField(field as keyof typeof formData, formData[field as keyof typeof formData])) {
+      const value = formData[field as keyof typeof formData];
+      if (typeof value === 'string' && validateField(field as keyof typeof formData, value)) {
         hasErrors = true;
       }
     });
@@ -193,7 +200,7 @@ const UserSignupForm = () => {
     const loadingToast = toast.loading("Creating your account...");
 
     try {
-      const response = await fetch("http://localhost:4000/api/v1/auth/signup", {
+      const response = await fetch("NEXT_PUBLIC_BASE_SERVER_URL/api/v1/auth/signup", {
         method: "POST",
         credentials: 'include', // Important for sending/receiving cookies
         headers: {

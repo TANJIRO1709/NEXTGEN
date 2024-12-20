@@ -14,15 +14,9 @@ import {
   X,
   Reply,
   Forward,
-  Archive,
   Users,
   Phone,
-  Building,
-  MapPin,
   Clock,
-  Mail as MailIcon,
-  ExternalLink,
-  HelpCircle,
   UserCheck,
   Globe
 } from 'lucide-react';
@@ -30,13 +24,13 @@ import { motion } from 'framer-motion';
 import ComposeDialog from './ComposeDialog';
 import { DashboardLayout } from '../../user/DashboardLayout';
 
-interface Contact {
-  id: number;
-  name: string;
-  role: string;
-  phone: string;
-  email: string;
-}
+// interface Contact {
+//   id: number;
+//   name: string;
+//   role: string;
+//   phone: string;
+//   email: string;
+// }
 
 interface Message {
   id: number;
@@ -50,29 +44,29 @@ interface Message {
   folder: 'inbox' | 'drafts' | 'sent' | 'spam' | 'trash' | 'starred';
 }
 
-const contacts: Contact[] = [
-  {
-    id: 1,
-    name: 'Dr. Sarah Johnson',
-    role: 'Chief Medical Officer',
-    phone: '+1 (555) 123-4567',
-    email: 'sarah.johnson@example.com'
-  },
-  {
-    id: 2,
-    name: 'James Wilson',
-    role: 'Operations Director',
-    phone: '+1 (555) 234-5678',
-    email: 'james.wilson@example.com'
-  },
-  {
-    id: 3,
-    name: 'Emily Chen',
-    role: 'Head of Research',
-    phone: '+1 (555) 345-6789',
-    email: 'emily.chen@example.com'
-  }
-];
+// const contacts: Contact[] = [
+//   {
+//     id: 1,
+//     name: 'Dr. Sarah Johnson',
+//     role: 'Chief Medical Officer',
+//     phone: '+1 (555) 123-4567',
+//     email: 'sarah.johnson@example.com'
+//   },
+//   {
+//     id: 2,
+//     name: 'James Wilson',
+//     role: 'Operations Director',
+//     phone: '+1 (555) 234-5678',
+//     email: 'james.wilson@example.com'
+//   },
+//   {
+//     id: 3,
+//     name: 'Emily Chen',
+//     role: 'Head of Research',
+//     phone: '+1 (555) 345-6789',
+//     email: 'emily.chen@example.com'
+//   }
+// ];
 
 const initialMessages: Message[] = [
   {
@@ -154,7 +148,6 @@ export default function InboxPage() {
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showContacts, setShowContacts] = useState(false);
-  const [showAllMails, setShowAllMails] = useState(false);
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
   const contactSectionsRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [isLoading, setIsLoading] = useState(true);

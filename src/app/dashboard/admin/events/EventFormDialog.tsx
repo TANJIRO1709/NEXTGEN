@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar, Clock, MapPin, Users, FileText, X, Tag, AlertTriangle } from 'lucide-react';
+import { Calendar, Clock, MapPin, FileText, X, Tag, AlertTriangle } from 'lucide-react';
 
 const tags = [
   'Male', 'Female', 'Minor', 'Youth', 'Student', 'Senior Citizen', 
@@ -72,15 +72,6 @@ export default function EventFormDialog({ isOpen, onClose, onSubmit, initialData
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
-  };
-
-  const toggleTag = (tag: string) => {
-    setFormData(prev => ({
-      ...prev,
-      selectedTags: prev.selectedTags.includes(tag)
-        ? prev.selectedTags.filter(t => t !== tag)
-        : [...prev.selectedTags, tag]
-    }));
   };
 
   if (!isOpen) return null;

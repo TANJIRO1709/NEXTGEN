@@ -3,7 +3,6 @@ import { useState } from "react";
 import Sidebar from "@/app/components/ui/common/Sidebar";
 import LogoutModal from "@/app/components/ui/common/LogoutModal";
 import ProtectedRoute from "@/app/components/auth/ProtectedRoute";
-import { useAuth } from "@/app/context/AuthContext";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -11,8 +10,14 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const { logout } = useAuth();
-  const userType = typeof window !== 'undefined' ? localStorage.getItem('userType') : 'admin';
+  
+  const getUserType = (): "user" | "admin" => {
+    if (typeof window === 'undefined') return 'admin';
+    const storedType = localStorage.getItem('userType');
+    return (storedType === 'user' || storedType === 'admin') ? storedType : 'admin';
+  };
+
+  const userType = getUserType();
 
   const handleLogout = () => {
     setShowLogoutModal(true);
@@ -26,7 +31,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           {children}
         </main>
         {showLogoutModal && (
-          <LogoutModal onClose={() => setShowLogoutModal(false)} onLogout={logout} />
+          <LogoutModal onClose={() => setShowLogoutModal(false)} />
         )}
       </div>
     </ProtectedRoute>

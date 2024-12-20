@@ -2,7 +2,6 @@
 
 import React, { useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from 'embla-carousel-autoplay';
 import { motion, useInView } from 'framer-motion';
+
 
 import Slider from '../common/Slider';
 
@@ -149,7 +149,7 @@ const Hero: React.FC = () => {
                       <div className="p-1">
                         <Card className="bg-transparent border-none w-full h-auto">
                           <CardContent className="flex aspect-square items-center justify-center p-6">
-                            <img src={item.url} alt={`Image ${item.id}`} />
+                            <img src={item.url} alt={`Image ${item.id}`} width={400} height={400} />
                           </CardContent>
                         </Card>
                       </div>

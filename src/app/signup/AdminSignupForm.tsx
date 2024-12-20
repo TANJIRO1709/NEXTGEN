@@ -125,7 +125,7 @@ const AdminSignupForm = () => {
     return error;
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setAdminData({ ...adminData, [name]: value });
 
@@ -148,25 +148,25 @@ const AdminSignupForm = () => {
     }
   };
 
-  const handleStateChange = (e) => {
+  const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     setAdminData({
       ...adminData,
       state: value,
       district: "",
+      pinCode: "",
       postOffice: "",
     });
 
-    // Validate state
+    // Validate state field
     const error = validateField("state", value);
     setErrors((prev) => ({
       ...prev,
       state: error,
-      district: "", // Clear district error when state changes
     }));
   };
 
-  const handleDistrictChange = (e) => {
+  const handleDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
     setAdminData({
       ...adminData,
@@ -271,7 +271,7 @@ const AdminSignupForm = () => {
     const loadingToast = toast.loading("Creating admin account...");
 
     try {
-      const response = await fetch(`http://localhost:4000/api/v1/auth/admin/signup`, {
+      const response = await fetch(`NEXT_PUBLIC_BASE_SERVER_URL/api/v1/auth/admin/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,10 +1,12 @@
 "use client"
 import React, { useState } from "react";
 
-const ButtonGroup = () => {
-  const [selected, setSelected] = useState("Left");
+type ButtonOption = "Left" | "Middle";
 
-  const handleButtonClick = (button) => {
+const ButtonGroup = () => {
+  const [selected, setSelected] = useState<ButtonOption>("Left");
+
+  const handleButtonClick = (button: ButtonOption) => {
     setSelected(button);
   };
 

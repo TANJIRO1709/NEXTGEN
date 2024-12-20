@@ -4,10 +4,9 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { FaUserFriends, FaShoppingCart, FaStar, FaChartLine } from "react-icons/fa";
 
-
 const Stats = () => {
   const [startCount, setStartCount] = useState(false);
-  const { ref, inView } = useInView({
+  const { ref } = useInView({
     triggerOnce: true,
     onChange: (isInView) => {
       if (isInView) setStartCount(true);

@@ -1,12 +1,11 @@
 import React from "react";
 
-import { FaCheckCircle } from "react-icons/fa";
-import { CgOrganisation } from "react-icons/cg";
-import { TbPoint } from "react-icons/tb";
+interface CardProps {
+  name: string;
+  overview: string;
+}
 
-
-
-function Card({ name, overview }) {
+function Card({ name, overview }: CardProps) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl max-w-sm w-96 mx-auto mt-4 min-h-[350px] flex flex-col justify-between">
       <div>

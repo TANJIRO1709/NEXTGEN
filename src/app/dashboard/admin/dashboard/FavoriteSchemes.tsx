@@ -66,7 +66,7 @@ export default function FavoriteSchemes() {
     scheme.tags.some(tag => tag.label.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  const handleSchemeClick = (schemeId: string) => {
+  const handleSchemeClick = () => {
     router.push('/dashboard/admin/viewSchemes');
   };
 
@@ -76,7 +76,7 @@ export default function FavoriteSchemes() {
       <div className="p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">User's Favorite Schemes</h2>
+            <h2 className="text-2xl font-bold text-gray-800">User&apos;s Favorite Schemes</h2>
             <p className="text-gray-600 mt-1">Your most liked schemes</p>
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function FavoriteSchemes() {
 
             <div className="flex items-center justify-between pt-4 border-t">
               <button 
-                onClick={() => handleSchemeClick(scheme.id)}
+                onClick={handleSchemeClick}
                 className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2 group"
               >
                 View Details

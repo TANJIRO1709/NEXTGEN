@@ -30,19 +30,21 @@ const Schemes = () => {
   const controls = useAnimation();
   const [hasAnimated, setHasAnimated] = useState(false);
 
-  const handleScroll = () => {
-    const componentPosition = document.getElementById('schemes')?.getBoundingClientRect()?.top;
-    const screenHeight = window.innerHeight;
-    if (componentPosition < screenHeight && !hasAnimated) {
-      controls.start("visible");
-      setHasAnimated(true);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      const element = document.getElementById('schemes');
+      const componentPosition = element?.getBoundingClientRect()?.top ?? Infinity;
+      const screenHeight = window.innerHeight;
+      
+      if (componentPosition < screenHeight && !hasAnimated) {
+        controls.start("visible");
+        setHasAnimated(true);
+      }
+    };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasAnimated]);
+  }, [hasAnimated, controls]);
 
   const filteredSchemes = selectedCategory === "All" 
     ? schemesData 

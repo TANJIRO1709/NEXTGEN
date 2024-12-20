@@ -7,7 +7,6 @@ import {
   Users, 
   Briefcase, 
   BarChart, 
-  ChevronRight,
   Search
 } from 'lucide-react';
 import Link from 'next/link';
@@ -30,7 +29,6 @@ const item = {
 export default function Documentation() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   // Sections data
   const sections = [
@@ -156,7 +154,7 @@ export default function Documentation() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-medium">2</span>
-                    <span>Click the "Add User" button in the top right</span>
+                    <span>Click the &quot;Add User&quot; button in the top right</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-medium">3</span>
@@ -164,14 +162,14 @@ export default function Documentation() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-medium">4</span>
-                    <span>Click "Save" to create the user</span>
+                    <span>Click &quot;Save&quot; to create the user</span>
                   </li>
                 </ol>
 
                 <h3>Managing Existing Users</h3>
                 <p>You can perform the following actions on existing users:</p>
                 <ul className="space-y-2">
-                  {[
+                  {[/* eslint-disable @typescript-eslint/no-use-before-define */
                     "View detailed information by clicking on a user's name",
                     'Edit user details using the edit button',
                     'Delete users (requires confirmation)',
@@ -214,7 +212,7 @@ export default function Documentation() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-sm font-medium">2</span>
-                    <span>Click "Create New Scheme"</span>
+                    <span>Click &quot;Create New Scheme&quot;</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-sm font-medium">3</span>
@@ -233,7 +231,7 @@ export default function Documentation() {
                 <h3>Monitoring Schemes</h3>
                 <p>Track scheme performance through:</p>
                 <ul className="space-y-2">
-                  {[
+                  {[/* eslint-disable @typescript-eslint/no-use-before-define */
                     'Real-time enrollment statistics',
                     'Beneficiary demographics',
                     'Financial disbursement tracking',
@@ -270,7 +268,7 @@ export default function Documentation() {
                 <h3>Generating Reports</h3>
                 <p>Access various reports from the Analytics dashboard:</p>
                 <ul className="space-y-2">
-                  {[
+                  {[/* eslint-disable @typescript-eslint/no-use-before-define */
                     'User demographics and distribution',
                     'Scheme performance metrics',
                     'Financial summaries',
@@ -286,7 +284,7 @@ export default function Documentation() {
                 <h3>Data Export</h3>
                 <p>Export data in multiple formats:</p>
                 <ul className="space-y-2">
-                  {[
+                  {[/* eslint-disable @typescript-eslint/no-use-before-define */
                     'CSV for spreadsheet analysis',
                     'PDF for formal reporting',
                     'JSON for system integration'

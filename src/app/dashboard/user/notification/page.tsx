@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaRegBell, FaInbox, FaSpinner, FaTrash, FaStar, FaRegStar } from "react-icons/fa";
+import { FaRegBell,  FaSpinner,  FaStar, FaRegStar } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 import Image from "next/image";
 import { DashboardLayout } from "../DashboardLayout";
@@ -26,7 +26,7 @@ const mockNotifications: Notification[] = [
     type: 'inbox',
     title: 'Food App IOS & Android - Need confirmation',
     sender: 'Pepper Potts',
-    senderImage: '/img/user.png',
+    senderImage: 'https://res.cloudinary.com/dcnuizxi4/image/upload/v1734702163/user_qpisao.png',
     content: 'Hi Team, I hope this email finds you well. We are ready to begin the development of the Food App for both iOS and Android platforms...',
     timestamp: '11:50 AM',
     read: false,
@@ -37,7 +37,7 @@ const mockNotifications: Notification[] = [
     type: 'inbox',
     title: 'Prepare Mockup as per the spec document',
     sender: 'Paul Smith',
-    senderImage: '/img/user.png',
+    senderImage: 'https://res.cloudinary.com/dcnuizxi4/image/upload/v1734702163/user_qpisao.png',
     content: 'Hello everyone, Please find attached the specification document...',
     timestamp: '11:50 AM',
     read: true,
@@ -48,7 +48,7 @@ const mockNotifications: Notification[] = [
     type: 'notification',
     title: 'New Comment on your post',
     sender: 'Mark Lee',
-    senderImage: '/img/user.png',
+    senderImage: 'https://res.cloudinary.com/dcnuizxi4/image/upload/v1734702163/user_qpisao.png',
     content: 'Mark Lee commented on your recent post about the project updates.',
     timestamp: '11:45 AM',
     read: false,

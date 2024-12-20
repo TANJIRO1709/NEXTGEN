@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { User, Mail, Phone, MapPin, Building2, Briefcase, Award, Calendar } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import EditProfileDialog from './EditProfileDialog';
 import { DashboardLayout } from '../../user/DashboardLayout';
 import { motion } from 'framer-motion';
@@ -41,7 +40,6 @@ const staggerContainer = {
 };
 
 export default function ProfilePage() {
-  const router = useRouter();
   const [showEditDialog, setShowEditDialog] = useState(false);
 
   const [profile, setProfile] = useState<ProfileData>({
@@ -63,7 +61,15 @@ export default function ProfilePage() {
     }
   });
 
-  const handleSave = (newData: any) => {
+  const handleSave = (newData: {
+    fullName: string;
+    email: string;
+    state: string;
+    district: string;
+    postOffice: string;
+    department: string;
+    employeeId: string;
+  }) => {
     setProfile(prevProfile => ({
       ...prevProfile,
       name: newData.fullName,

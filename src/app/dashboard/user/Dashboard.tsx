@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Search, ChevronLeft, ChevronRight, ArrowRight, GraduationCap, MapPin, Calendar, Users, Briefcase, Star, Globe, Navigation, ChevronDown, Building2, Tags, Clock, Filter } from 'lucide-react';
-import { Event, DUMMY_EVENTS, searchEvents } from '../../../lib/eventSearch'
-import { Scheme, DUMMY_LIKED_SCHEMES, searchSchemes } from '../../../lib/schemeSearch';
+import { useState } from 'react';
+import { Search, MapPin, Calendar, Users, Briefcase, Star, Globe, Navigation, Building2 } from 'lucide-react';
+import { searchEvents } from '../../../lib/eventSearch'
 import { DashboardLayout } from './DashboardLayout';
 import { motion } from 'framer-motion';
 
@@ -60,11 +59,6 @@ const DashboardContent = () => {
   const [selectedEventStatus, setSelectedEventStatus] = useState<'all' | 'ongoing' | 'completed' | 'upcoming'>('all');
   const [selectedEventTags, setSelectedEventTags] = useState<string[]>([]);
 
-  // Scheme search state
-  const [schemeSearchTerm, setSchemeSearchTerm] = useState('');
-  const [selectedSchemeTags, setSelectedSchemeTags] = useState<string[]>([]);
-  const [minLikes, setMinLikes] = useState(0);
-
   // Handle event type change
   const handleEventTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedEventType(e.target.value as 'all' | 'mela' | 'campaign' | 'workshop');
@@ -97,58 +91,6 @@ const DashboardContent = () => {
     tags: selectedEventTags
   });
 
-  // Filter schemes using the search utility
-  const filteredSchemes = searchSchemes({
-    searchTerm: schemeSearchTerm,
-    tags: selectedSchemeTags,
-    minLikes: minLikes
-  });
-
-  const [greeting, setGreeting] = useState('');
-  const [currentScheme, setCurrentScheme] = useState(0);
-  const [isEventsExpanded, setIsEventsExpanded] = useState(false);
-  const [pincode, setPincode] = useState("769008");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // useEffect(() => {
-  //   const updateGreeting = () => {
-  //     const istTime = new Date(new Date().getTime() + (5.5 * 60 * 60 * 1000));
-  //     const hour = istTime.getHours();
-      
-  //     if (hour >= 5 && hour < 12) {
-  //       setGreeting('Good Morning');
-  //     } else if (hour >= 12 && hour < 17) {
-  //       setGreeting('Good Afternoon');
-  //     } else if (hour >= 17 && hour < 22) {
-  //       setGreeting('Good Evening');
-  //     } else {
-  //       setGreeting('Good Night');
-  //     }
-  //   };
-  
-  //   updateGreeting();
-  //   const interval = setInterval(updateGreeting, 60000);
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentScheme((prev) => (prev + 1) % filteredSchemes.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [filteredSchemes]);
-
-  const nextScheme = () => {
-    setCurrentScheme((prev) => (prev + 1) % filteredSchemes.length);
-  };
-
-  const prevScheme = () => {
-    setCurrentScheme((prev) => 
-      prev === 0 ? filteredSchemes.length - 1 : prev - 1
-    );
-  };
-
   return (
     <DashboardLayout>
     <motion.div 
@@ -157,11 +99,6 @@ const DashboardContent = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Greeting Section */}
-      <h1 className="text-4xl font-bold text-gray-800">
-        Hi User, {greeting}
-      </h1>
-
       {/* First Row: Liked Schemes and Featured Schemes */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Section - Liked Schemes */}
@@ -176,8 +113,6 @@ const DashboardContent = () => {
               <input
                 type="text"
                 placeholder="Search your favorite schemes..."
-                value={schemeSearchTerm}
-                onChange={(e) => setSchemeSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-50 border-none focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
               />
               <Search className="absolute left-3 top-3.5 text-gray-400 h-5 w-5" />
@@ -185,31 +120,7 @@ const DashboardContent = () => {
 
             <div className="flex-1 overflow-y-auto no-scrollbar">
               <div className="space-y-4 pr-2">
-                {filteredSchemes.map((scheme) => (
-                  <div
-                    key={scheme.id}
-                    className="p-6 border border-gray-100 rounded-xl hover:shadow-md transition-all duration-300 space-y-3 bg-white"
-                  >
-                    <h3 className="font-semibold text-lg text-gray-900">{scheme.name}</h3>
-                    <p className="text-gray-600 line-clamp-2">{scheme.details}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {scheme.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <button 
-                      className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2 group"
-                    >
-                      <span>View Details</span>
-                      <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                ))}
+                {/* Schemes List */}
               </div>
             </div>
           </div>
@@ -219,76 +130,7 @@ const DashboardContent = () => {
         <div className="bg-white rounded-xl lg:h-[450px] shadow-lg p-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Schemes</h2>
           <div className="relative h-[calc(100%-4rem)]">
-            <button
-              onClick={prevScheme}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 bg-white rounded-full w-10 h-10 shadow-lg hover:bg-gray-50 transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
-            >
-              <ChevronLeft className="h-6 w-6 text-gray-600" />
-            </button>
-
-            <div className="overflow-hidden h-full">
-              <div 
-                className="transition-transform duration-500 ease-in-out h-full flex"
-                style={{ transform: `translateX(-${currentScheme * 100}%)` }}
-              >
-                {filteredSchemes.map((scheme, index) => (
-                  <div 
-                    key={scheme.id} 
-                    className="bg-blue-50 rounded-xl p-8 h-full flex-shrink-0 w-full flex flex-col"
-                  >
-                    <div className="absolute top-4 right-4">
-                      <div className="bg-blue-500 rounded-xl p-3">
-                        <GraduationCap className="h-6 w-6 text-white" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col h-full">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                        {scheme.name}
-                      </h3>
-                      <p className="text-gray-600 flex-grow">
-                        {scheme.details}
-                      </p>
-                      <div className="space-y-4 mt-auto">
-                        <div className="flex flex-wrap gap-2">
-                          {scheme.tags.map((tag, tagIndex) => (
-                            <span
-                              key={tagIndex}
-                              className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        <button className="text-blue-600 hover:text-blue-700 font-medium flex items-center space-x-1">
-                          <span>View Details</span>
-                          <ArrowRight className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <button
-              onClick={nextScheme}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white rounded-full w-10 h-10 shadow-lg hover:bg-gray-50 transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
-            >
-              <ChevronRight className="h-6 w-6 text-gray-600" />
-            </button>
-
-            <div className="flex justify-center space-x-2 mt-4">
-              {filteredSchemes.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentScheme(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    currentScheme === index ? 'w-6 bg-blue-600' : 'w-2 bg-gray-300'
-                  }`}
-                />
-              ))}
-            </div>
+            {/* Carousel */}
           </div>
         </div>
       </div>
@@ -374,7 +216,7 @@ const DashboardContent = () => {
 
           {/* Events List */}
           <div className="space-y-4">
-            {filteredEvents.slice(0, isEventsExpanded ? undefined : 3).map((event) => (
+            {filteredEvents.slice(0, 3).map((event) => (
               <div
                 key={event.id}
                 className="group p-6 border-2 border-gray-100 rounded-xl hover:border-blue-200 hover:shadow-lg transition-all duration-300 relative overflow-hidden"
@@ -427,15 +269,6 @@ const DashboardContent = () => {
                 </div>
               </div>
             ))}
-            {DUMMY_EVENTS.length > 3 && (
-              <button
-                onClick={() => setIsEventsExpanded(!isEventsExpanded)}
-                className="w-full py-2.5 text-blue-600 hover:text-blue-700 font-medium flex items-center justify-center space-x-1 group hover:bg-blue-50 rounded-xl transition-all duration-300"
-              >
-                <span>{isEventsExpanded ? 'Show Less' : 'Show More'}</span>
-                <ChevronDown className={`h-4 w-4 transition-transform duration-500 ${isEventsExpanded ? 'rotate-180' : ''} group-hover:translate-y-0.5`} />
-              </button>
-            )}
           </div>
         </div>
 
@@ -467,8 +300,6 @@ const DashboardContent = () => {
                 <input
                   type="text"
                   placeholder="Enter pincode..."
-                  value={pincode}
-                  onChange={(e) => setPincode(e.target.value)}
                   className="w-full pl-4 pr-10 py-2.5 rounded-lg bg-gray-50 border-2 border-transparent group-hover:border-blue-200 focus:border-blue-500 focus:outline-none transition-all duration-300"
                 />
                 <MapPin className="absolute right-3 top-2.5 h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-300" />

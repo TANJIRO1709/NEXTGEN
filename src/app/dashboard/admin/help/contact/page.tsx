@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Phone, Clock, Users, Mail } from 'lucide-react';
+import { ArrowLeft, Phone,  Users, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 

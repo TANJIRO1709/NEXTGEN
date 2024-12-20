@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { Search, ChevronDown, ChevronUp, ArrowUpDown, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
-import { User, users } from '../../../../data/users';
+import {  users } from '../../../../data/users';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 type SortField = 'name' | 'age' | 'income' | null;

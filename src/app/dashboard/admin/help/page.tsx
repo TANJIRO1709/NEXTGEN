@@ -63,7 +63,6 @@ const item = {
 
 export default function HelpCenter() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
     setOpenFAQ(openFAQ === index ? null : index);
@@ -103,8 +102,6 @@ export default function HelpCenter() {
           {/* Documentation */}
           <motion.div
             variants={item}
-            onHoverStart={() => setHoveredCard(0)}
-            onHoverEnd={() => setHoveredCard(null)}
           >
             <Link href="/help/documentation">
               <motion.div 
@@ -131,8 +128,6 @@ export default function HelpCenter() {
           {/* Chat Support */}
           <motion.div
             variants={item}
-            onHoverStart={() => setHoveredCard(1)}
-            onHoverEnd={() => setHoveredCard(null)}
           >
             <motion.div 
               className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg hover:shadow-xl 
@@ -158,8 +153,6 @@ export default function HelpCenter() {
           {/* Phone Support */}
           <motion.div
             variants={item}
-            onHoverStart={() => setHoveredCard(2)}
-            onHoverEnd={() => setHoveredCard(null)}
           >
             <Link href="/help/phone-support">
               <motion.div 

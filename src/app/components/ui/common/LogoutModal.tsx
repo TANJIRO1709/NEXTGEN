@@ -17,7 +17,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
   const handleLogout = async () => {
     try {
       // Call backend to clear the cookie
-      const response = await fetch('http://localhost:4000/api/v1/auth/logout', {
+      const response = await fetch('NEXT_PUBLIC_BASE_SERVER_URL/api/v1/auth/logout', {
         method: 'POST',
         credentials: 'include',
       });
@@ -76,7 +76,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ onClose }) => {
             onClick={handleLogout}
             className="px-5 py-2.5 rounded-lg w-full tracking-wide text-white text-sm border-none outline-none bg-red-500 hover:bg-red-600"
           >
-            Yes, I'm sure
+            Yes, I&apos;m sure
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { MapPin, Calendar, Users, TrendingUp, ExternalLink, Clock, AlertCircle, Tag, Building2 } from "lucide-react";
+import { MapPin, Calendar, TrendingUp, ExternalLink, Clock, AlertCircle, Tag, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 

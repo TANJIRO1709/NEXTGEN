@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { FaCheckCircle, FaLightbulb, FaUsers, FaChartLine, FaCog, FaHistory, FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
+import { FaCheckCircle, FaLightbulb, FaUsers, FaChartLine, FaCog, FaHistory } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useRouter } from 'next/navigation';
 
@@ -18,30 +18,9 @@ const AboutUs = () => {
 
   const features = [
     { icon: <FaLightbulb />, title: "Know the right scheme for you", description: "Not sure where to start? Let our intelligent system analyze your profile and recommend the most suitable financial and insurance schemes." },
-    { icon: <FaUsers />, title: "Discover related schemes", description: "Discover schemes tailored to your demographic location, ensuring they’re relevant and impactful for your community." },
+    { icon: <FaUsers />, title: "Discover related schemes", description: "Discover schemes tailored to your demographic location, ensuring they're relevant and impactful for your community." },
     { icon: <FaChartLine />, title: "Compare alternatives", description: "Easily compare multiple schemes side by side to understand their benefits, features, and suitability for your needs." },
     { icon: <FaCog />, title: "Help us by updating your profile", description: "Receive curated suggestions based on gender, occupation, and economic trends to match your unique financial needs." },
-  ];
-
-  const teamMembers = [
-    {
-      name: "Alex Johnson",
-      role: "Lead Developer",
-      image: "https://randomuser.me/api/portraits/men/1.jpg",
-      socials: { linkedin: "#", github: "#", twitter: "#" }
-    },
-    {
-      name: "Sarah Chen",
-      role: "UI/UX Designer",
-      image: "https://randomuser.me/api/portraits/women/1.jpg",
-      socials: { linkedin: "#", github: "#", twitter: "#" }
-    },
-    {
-      name: "Mike Wilson",
-      role: "Product Manager",
-      image: "https://randomuser.me/api/portraits/men/2.jpg",
-      socials: { linkedin: "#", github: "#", twitter: "#" }
-    }
   ];
 
   const timelineEvents = [
@@ -135,9 +114,9 @@ const AboutUs = () => {
                     <span className="text-gray-700">Maximized outreach impact with data-driven planning.</span>
                   </div>
                   
+
               </div>
             </motion.div>
-
 
             {/* Call to Action Section */}
             <motion.div

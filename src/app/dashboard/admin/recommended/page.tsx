@@ -7,11 +7,6 @@ import { districtData } from '@/data/districts';
 import { MessageSquare, Search, Sparkles } from 'lucide-react';
 import axios from 'axios';
 
-interface Scheme {
-  name: string;
-  description: string;
-}
-
 interface FormData {
   state: string;
   district: string;
@@ -36,7 +31,6 @@ interface TargetAudienceFormData {
 }
 
 const AIRecommendations = () => {
-  const [recommendations, setRecommendations] = useState<Scheme[]>([]);
   const [schemeLoading, setSchemeLoading] = useState(false);
   const [farmingLoading, setFarmingLoading] = useState(false);
   const [targetLoading, setTargetLoading] = useState(false);
@@ -130,13 +124,27 @@ const AIRecommendations = () => {
       } else {
         setAiResponse('Received an invalid response format. Please try again.');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching recommendations:', error);
-      if (error.code === 'ECONNABORTED') {
+      
+      // Type guard for axios error
+      interface AxiosError {
+        code?: string;
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+        request?: unknown;
+      }
+
+      const axiosError = error as AxiosError;
+      
+      if (axiosError.code === 'ECONNABORTED') {
         setAiResponse('The request took too long to respond. Please try again.');
-      } else if (error.response) {
-        setAiResponse(`Error: ${error.response.data?.message || 'Something went wrong. Please try again.'}`);
-      } else if (error.request) {
+      } else if (axiosError.response) {
+        setAiResponse(`Error: ${axiosError.response.data?.message || 'Something went wrong. Please try again.'}`);
+      } else if (axiosError.request) {
         setAiResponse('Unable to reach the server. Please check your connection and try again.');
       } else {
         setAiResponse('An unexpected error occurred. Please try again.');
@@ -174,8 +182,8 @@ const AIRecommendations = () => {
 
       clearTimeout(timeoutId);
       setFarmingResponse(response.data.response);
-    } catch (error: any) {
-      if (error.name !== 'CanceledError') {
+    } catch (error) {
+      if (error && typeof error === 'object' && 'name' in error && error.name !== 'CanceledError') {
         console.error('Error fetching recommendations:', error);
         setFarmingResponse('Sorry, there was an error processing your request. Please try again.');
       }
@@ -218,13 +226,27 @@ const AIRecommendations = () => {
       } else {
         setTargetResponse('Received an invalid response format. Please try again.');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error fetching recommendations:', error);
-      if (error.code === 'ECONNABORTED') {
+      
+      // Type guard for axios error
+      interface AxiosError {
+        code?: string;
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+        request?: unknown;
+      }
+
+      const axiosError = error as AxiosError;
+      
+      if (axiosError.code === 'ECONNABORTED') {
         setTargetResponse('The request took too long to respond. Please try again.');
-      } else if (error.response) {
-        setTargetResponse(`Error: ${error.response.data?.message || 'Something went wrong. Please try again.'}`);
-      } else if (error.request) {
+      } else if (axiosError.response) {
+        setTargetResponse(`Error: ${axiosError.response.data?.message || 'Something went wrong. Please try again.'}`);
+      } else if (axiosError.request) {
         setTargetResponse('Unable to reach the server. Please check your connection and try again.');
       } else {
         setTargetResponse('An unexpected error occurred. Please try again.');

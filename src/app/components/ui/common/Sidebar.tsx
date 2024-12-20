@@ -16,10 +16,20 @@ import {
   RiBarChartFill,
   RiInboxLine,
 } from "react-icons/ri";
+import { IconType } from "react-icons";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-const userMainLinks = [
+type Department = 'HL' | 'CL' | 'RL' | 'SL';
+
+interface LinkItem {
+  name: string;
+  icon: IconType;
+  path: string;
+  className?: string;
+}
+
+const userMainLinks: LinkItem[] = [
   { name: "Dashboard", icon: RiDashboardLine, path: "/dashboard/user" },
   { name: "View Schemes", icon: RiFileList2Line, path: "/dashboard/user/viewSchemes" },
   { name: "AI Recommendations", icon: RiFileListLine, path: "/dashboard/user/recommended" },
@@ -28,15 +38,15 @@ const userMainLinks = [
   { name: "Help Center", icon: RiQuestionLine, path: "/dashboard/user/help" }
 ];
 
-const getDepartmentLinks = (department: string) => {
-  const commonAdminLinks = [
+const getDepartmentLinks = (department: Department) => {
+  const commonAdminLinks: LinkItem[] = [
     { name: "View Schemes", icon: RiFileList2Line, path: "/dashboard/admin/viewSchemes" },
     { name: "Inbox", icon: RiInboxLine, path: "/dashboard/admin/inbox" },
     { name: "Profile", icon: RiUser3Line, path: "/dashboard/admin/profile" },
     { name: "Help Center", icon: RiQuestionLine, path: "/dashboard/admin/help" },
   ];
 
-  const departmentSpecificLinks = {
+  const departmentSpecificLinks: Record<Department, LinkItem[]> = {
     'HL': [
       { name: "Dashboard", icon: RiDashboardLine, path: "/dashboard/admin" },
       { name: "Visual Representation", icon: RiBarChartFill, path: "/dashboard/admin/visualRepresentation" },
@@ -61,7 +71,7 @@ const getDepartmentLinks = (department: string) => {
   return departmentSpecificLinks[department] || departmentSpecificLinks['HL'];
 };
 
-const bottomLinks = [
+const bottomLinks: LinkItem[] = [
   { 
     name: "Logout", 
     icon: RiLogoutCircleRLine, 
@@ -89,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({ userType, onLogout }) => {
   
   const mainLinks = userType === 'admin' ? getDepartmentLinks(adminDepartment) : userMainLinks;
 
-  const handleLinkClick = (item: typeof bottomLinks[0]) => {
+  const handleLinkClick = (item: LinkItem) => {
     if (item.name === 'Logout') {
       onLogout();
     }
